@@ -1,0 +1,44 @@
+<resources>
+    <string name="app_name" translatable="false">Weather</string>
+    <string name="city" translatable="false">City</string>
+    <string name="temp" translatable="false">Temperature</string>
+    <string name="weather" translatable="false">Weather</string>
+    <string name="weather_in_city" translatable="false">Weather in City</string>
+    <string name="choose_city" translatable="false">Choose city</string>
+    <string name="Location" translatable="false">Location</string>
+    <string name="changeColor" translatable="false">Change color</string>
+    <string name="move_up" translatable="false">Up</string>
+    <string name="move_down" translatable="false">Down</string>
+    <string name="remove" translatable="false">Delete</string>
+    <string name="hello_blank_fragment" translatable="false">Weather in City</string>
+    <string name="request_camera_permission" translatable="false">Request CAMERA permission:</string>
+    <string name="request" translatable="false">Request</string>
+    <string name="request_record_audio_and_access_fine_location_permissions" translatable="false">Request RECORD_AUDIO and ACCESS_FINE_LOCATION permissions:</string>
+    <string name="permission_denied" translatable="false">Permission denied</string>
+    <string name="permission_denied_forever_message" translatable="false">"You have denied permissions forever. You can change your decision in the app settings.\n\nWould you like to open app settings?"</string>
+    <string name="location_permissions_granted" translatable="false"><![CDATA[Location & record audio permissions grated]]></string>
+    <string name="open" translatable="false">Open</string>
+    <string name="camera_permission_granted" translatable="false">Camera permission has been granted</string>
+    <string name="permissions_denied_forever" translatable="false">Permissions are denied forever</string>
+    <string name="cancel" translatable="false">Cancel</string>
+    <string name="please_wait">Please wait...</string>
+    <string name="percentage_value">%1$d%%</string>
+    <string name="field_email">Email</string>
+    <string name="field_password">Password</string>
+    <string name="action_sign_in">SignIn</string>
+    <string name="action_create_account">Create Account</string>
+    <string name="invalid_email_or_password">Invalid email or password</string>
+    <string name="field_is_empty">Field is empty</string>
+    <string name="field_username">UserName</string>
+    <string name="field_repeat_password">Repeat password</string>
+    <string name="password_mismatch">Password mismatch</string>
+    <string name="account_already_exists">Account already exists</string>
+    <string name="profile_title_hint">Let\'s imagine this is a user profile screen</string>
+    <string name="action_edit_profile">Edit Profile</string>
+    <string name="action_logout">Logout</string>
+    <string name="edit_profile_description">Right now you can edit only username</string>
+    <string name="action_save">Save</string>
+    <string name="action_cancel">Cancel</string>
+    <string name="city_list">List Cities</string>
+    <string name="profile">Profile</string>
+</resources>
