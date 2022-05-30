@@ -14,7 +14,7 @@ import kotlinx.android.synthetic.main.activity_main.*
 class ProfileFragment : Fragment(R.layout.fragment_profile) {
 
     private lateinit var binding: FragmentProfileBinding
-    private val viewModel by viewModelCreator { ProfileViewModel(Repositories.accountRepository) }
+    private val viewModel by viewModelCreator { ProfileViewModel(Repositories.accountsRepository) }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)

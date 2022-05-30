@@ -14,7 +14,7 @@ import com.example.weather.utils.observeEvent
 class SignInFragment : Fragment(R.layout.fragment_sign_in) {
 
     private lateinit var binding: FragmentSignInBinding
-    private val viewModel by viewModelCreator{SignInViewModel(Repositories.accountRepository)}
+    private val viewModel by viewModelCreator{SignInViewModel(Repositories.accountsRepository)}
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)

@@ -76,7 +76,7 @@ class WeatherInCityFragment : Fragment(R.layout.fragment_weather_in_city){
         )
         queue.add(stringRequest)
     }
-
+//val url = "https://api.weatherapi.com/v1/current.json?key=4af1e205156743f9af6231933222005&q=moscow&aqi=no"
     companion object{
         const val API_KEY = "4af1e205156743f9af6231933222005"}
 }

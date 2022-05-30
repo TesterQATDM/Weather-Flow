@@ -16,7 +16,7 @@ import com.example.weather.utils.viewModelCreator
 class SignUpFragment : Fragment(R.layout.fragment_sign_up) {
 
     private lateinit var binding: FragmentSignUpBinding
-    private val viewModel by viewModelCreator { SignUpViewModel(Repositories.accountRepository) }
+    private val viewModel by viewModelCreator { SignUpViewModel(Repositories.accountsRepository) }
     private val args by navArgs<SignUpFragmentArgs>()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

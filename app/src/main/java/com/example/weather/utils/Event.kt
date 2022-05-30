@@ -1,5 +1,6 @@
 package com.example.weather.utils
 
+import android.database.sqlite.SQLiteException
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.LiveData
@@ -8,6 +9,9 @@ import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.fragment.findNavController
 import com.example.weather.R
+import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.withContext
 
 class Event<T>(
     value: T
@@ -65,4 +69,14 @@ fun Fragment.findTopNavController(): NavController {
 
 fun <T> LiveData<T>.requireValue(): T {
     return this.value ?: throw IllegalStateException("Value is empty")
+}
+
+suspend fun <T> wrapSQLiteException(dispatcher: CoroutineDispatcher, block: suspend CoroutineScope.() -> T): T {
+    try {
+        return withContext(dispatcher, block)
+    } catch (e: SQLiteException) {
+        val appException = StorageException()
+        appException.initCause(e)
+        throw appException
+    }
 }

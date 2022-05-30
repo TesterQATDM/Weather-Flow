@@ -2,10 +2,7 @@ package com.example.weather.repository.city.room
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity
-import androidx.room.Index
 import androidx.room.PrimaryKey
-import com.example.weather.repository.account.room.entities.Account
-import com.example.weather.repository.account.room.entities.SignUpData
 
 // todo #5: Define AccountDbEntity.
 //          - fields: id, email, username, password.
@@ -20,7 +17,7 @@ import com.example.weather.repository.account.room.entities.SignUpData
 //          - add companion object with fromSignUpData(signUpData: SignUpData) method for creating a new
 //            instance of AccountDbEntity from SignUpData object.
 
-@Entity(
+/*@Entity(
     tableName = "citiesListTable"
 )
 
@@ -29,3 +26,5 @@ data class CitiesListDbEntity(
     @ColumnInfo(name = "cityName") val cityName: String,
     @ColumnInfo(name = "cityDescriptions") val cityDescriptions: String,
 )
+
+ */

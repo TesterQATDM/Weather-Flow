@@ -1,12 +1,7 @@
 package com.example.weather.repository.city.room
 
 import androidx.room.Dao
-import androidx.room.Insert
 import androidx.room.Query
-import androidx.room.Update
-import com.example.weather.repository.account.room.entities.AccountSignInTuple
-import com.example.weather.repository.account.room.entities.AccountUpdateUsernameTuple
-import kotlinx.coroutines.flow.Flow
 
 // todo #9: Create a DAO interface for querying data from 'accounts' table, updating username and
 //          creating a new account.
@@ -25,11 +20,13 @@ import kotlinx.coroutines.flow.Flow
 //            - annotations: @Query
 //            - arguments: accountId
 //            - return type: Flow<AccountDbEntity>
-
+/*
 @Dao
 interface CitiesListDao {
 
-    //@Query("SELECT * FROM citiesListTable")
-    //suspend fun getCitiesList(): CitiesListDbEntity?
+    @Query("SELECT cityDescriptions * FROM citiesListTable ORDER BY id")
+    suspend fun getCitiesList(): CitiesListDbEntity?
 
 }
+
+ */

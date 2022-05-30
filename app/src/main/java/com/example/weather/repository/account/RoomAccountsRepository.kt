@@ -1,19 +1,29 @@
 package com.example.weather.repository.account
 
+import android.database.sqlite.SQLiteConstraintException
+import android.util.Log
+import com.example.weather.repository.account.room.AccountDbEntity
+import com.example.weather.repository.account.room.AccountsDao
 import com.example.weather.repository.account.room.entities.Account
 import com.example.weather.repository.account.room.entities.Field
 import com.example.weather.repository.account.room.entities.SignUpData
-import com.example.weather.utils.AccountIsExistException
-import com.example.weather.utils.AuthException
-import com.example.weather.utils.PasswordIsMismatchExceptions
-import com.example.weather.utils.EmptyFieldsExceptions
+import com.example.weather.repository.settings.AppSettings
+import com.example.weather.utils.*
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 
-class AccountInMemory: AccountRepository {
+class RoomAccountsRepository(
+    private val accountsDao: AccountsDao,
+    private val appSettings: AppSettings
+): AccountRepository {
 
     private val currentAccountFlow = MutableStateFlow<Account?>(null)
+
+    private val currentAccountIdFlowRoom = AsyncLoader {
+        MutableStateFlow(AccountId(appSettings.getCurrentAccountId()))
+    }
 
     private val accounts = mutableListOf(
         AccountRecord(
@@ -34,41 +44,29 @@ class AccountInMemory: AccountRepository {
 
     override suspend fun isSignedIn(): Boolean {
         delay(100)
-        return currentAccountFlow.value !=null
+        return appSettings.getCurrentAccountId() != AppSettings.NO_ACCOUNT_ID
     }
 
     override suspend fun signIn(email: String, password: String) {
         if (email.isBlank()) throw EmptyFieldsExceptions(Field.Email)
         if (password.isBlank()) throw EmptyFieldsExceptions(Field.Password)
-        val record = accounts.firstOrNull { it.account.email == email }
-        if (record != null && record.password == password)
-            currentAccountFlow.value = record.account
-        else
-            throw AuthException()
+        val tuple = accountsDao.findAccountByEmail(email) ?: throw AuthException()
+        if (tuple.password != password) throw AuthException()
+        appSettings.setCurrentAccountId(tuple.id)
+        currentAccountIdFlowRoom.get().value = AccountId(tuple.id)
+        Log.d("log", tuple.id.toString())
     }
 
-    override suspend fun createAccountRepository(
-        signUpData: SignUpData
-    ) {
-        if (signUpData.email.isBlank()) throw EmptyFieldsExceptions(Field.Email)
-        if (signUpData.username.isBlank()) throw EmptyFieldsExceptions(Field.Username)
-        if (signUpData.password.isBlank()) throw EmptyFieldsExceptions(Field.Password)
-        if (signUpData.repeatPassword.isBlank()) throw EmptyFieldsExceptions(Field.RepeatPassword)
-        if (signUpData.password != signUpData.repeatPassword) throw PasswordIsMismatchExceptions()
-        val record = accounts.firstOrNull { it.account.email == signUpData.email }
-        if (record != null) throw AccountIsExistException()
-        val account = AccountRecord(
-            Account(
-                id = 1000,
-                username = signUpData.username,
-                email = signUpData.email
-            ),
-            password = signUpData.password
-        )
-        accounts.add(account)
-        /*record = accounts.firstOrNull { it.account.mail == email }
-        currentAccountFlow.value = record?.account
-        In Future will be signIn after create Account*/
+    override suspend fun createAccountRepository(signUpData: SignUpData) = wrapSQLiteException(Dispatchers.IO){
+        signUpData.validate()
+        try {
+            val entity = AccountDbEntity.fromSignUpData(signUpData)
+            accountsDao.createAccount(entity)
+        } catch (e: SQLiteConstraintException) {
+            val appException = AccountIsExistException()
+            appException.initCause(e)
+            throw appException
+        }
     }
 
     override suspend fun changeName(name: String) {
@@ -81,7 +79,7 @@ class AccountInMemory: AccountRepository {
         currentRecord.account = updatedAccount
     }
 
-    override fun logout(){
+    override suspend fun logout(){
         currentAccountFlow.value = null
     }
 
@@ -89,4 +87,6 @@ class AccountInMemory: AccountRepository {
         var account: Account,
         val password: String
     )
+
+    private class AccountId(val value: Long)
 }

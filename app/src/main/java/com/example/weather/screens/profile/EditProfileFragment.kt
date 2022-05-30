@@ -15,7 +15,7 @@ class EditProfileFragment : Fragment(R.layout.fragment_edit_profile) {
 
     private lateinit var binding: FragmentEditProfileBinding
 
-    private val viewModel by viewModelCreator{ EditProfileViewModel(Repositories.accountRepository)}
+    private val viewModel by viewModelCreator{ EditProfileViewModel(Repositories.accountsRepository)}
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)

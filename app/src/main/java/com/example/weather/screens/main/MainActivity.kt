@@ -18,7 +18,7 @@ import java.util.regex.Pattern
 
 class MainActivity : AppCompatActivity(){
 
-    private val viewModel by viewModelCreator{MainActivityViewModel(Repositories.accountRepository) }
+    private val viewModel by viewModelCreator{MainActivityViewModel(Repositories.accountsRepository) }
     private lateinit var binding: ActivityMainBinding
     // view-model is used for observing username to be displayed in the toolbar
 
@@ -39,6 +39,7 @@ class MainActivity : AppCompatActivity(){
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater).also { setContentView(it.root) }
+        Repositories.init(applicationContext)
         setSupportActionBar(binding.toolbar)
 
         // preparing root nav controller

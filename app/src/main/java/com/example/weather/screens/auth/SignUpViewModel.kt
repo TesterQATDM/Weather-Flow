@@ -4,6 +4,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.weather.repository.account.AccountRepository
+import com.example.weather.repository.account.room.AccountsDao
 import com.example.weather.repository.account.room.entities.Field
 import com.example.weather.repository.account.room.entities.SignUpData
 import com.example.weather.utils.*
@@ -38,8 +39,12 @@ class SignUpViewModel(
             }
             catch (e: AuthException) {
                 authUpExceptionRuntimeException()
-            } catch (e: AccountIsExistException) {
+            }
+            catch (e: AccountIsExistException) {
                 accountIsExistRuntimeException()
+            }
+            catch (e: PasswordIsMismatchExceptions) {
+                authUpExceptionRuntimeException()
             }
             finally {
                 hideProgress()
