@@ -17,7 +17,7 @@ class CityInMemory: CityRepository {
     private val listeners = mutableSetOf<CityListener>()
 
     init {
-        cities = (0..2).map {
+        cities = (0..1).map {
             City(
                 id = it,
                 name = cityName[it],
@@ -70,7 +70,7 @@ class CityInMemory: CityRepository {
     }
 
     companion object{
-        private val cityName = mutableListOf("moscow", "saint%20petersburg", "tula")
-        private val cityDescriptions = mutableListOf("Москва", "Санкт-Петербург", "Тула")
+        private val cityName = mutableListOf("moscow", "saint%20petersburg")
+        private val cityDescriptions = mutableListOf("Москва", "Санкт-Петербург")
     }
 }

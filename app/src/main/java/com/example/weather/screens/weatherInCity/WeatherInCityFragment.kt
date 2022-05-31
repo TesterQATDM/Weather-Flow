@@ -13,6 +13,7 @@ import com.example.weather.databinding.FragmentWeatherInCityBinding
 import com.example.weather.repository.Repositories
 import com.example.weather.repository.city.room.entities.City
 import com.example.weather.utils.viewModelCreator
+import com.google.gson.Gson
 import org.json.JSONObject
 
 class WeatherInCityFragment : Fragment(R.layout.fragment_weather_in_city){
@@ -37,7 +38,7 @@ class WeatherInCityFragment : Fragment(R.layout.fragment_weather_in_city){
             bindingWeatherInCity.desCity.text = city.description
             getResult(city.name)
 /**
-*this is api is blocked for users from Russian
+*this api is blocked for users from Russian
 **/
 
             /*            CoroutineScope(Dispatchers.Main).launch {
@@ -58,17 +59,14 @@ class WeatherInCityFragment : Fragment(R.layout.fragment_weather_in_city){
     }
 
     private fun getResult(name: String) {
-        val url = "https://api.weatherapi.com/v1/current.json" +
-                "?key=$API_KEY&q=$name&aqi=no"
+        val url = "https://api.weatherapi.com/v1/current.json?key=$API_KEY&q=$name&aqi=no:lang=ru"
         val queue = Volley.newRequestQueue(requireContext())
         val stringRequest = StringRequest(
             Request.Method.GET,
             url,
             { response ->
-                val obj = JSONObject(response)
-                val temp = obj.getJSONObject("current")
-                Log.d("MyLog","Response: ${temp.getString("temp_c")}")
-                bindingWeatherInCity.description.text = temp.getString("temp_c")
+                val mMineUserEntity = Gson().fromJson(response, Weather::class.java)
+                bindingWeatherInCity.description.text = response.toString()
             },
             {
                 Log.d("MyLog", "Volley error: $it")
@@ -76,7 +74,8 @@ class WeatherInCityFragment : Fragment(R.layout.fragment_weather_in_city){
         )
         queue.add(stringRequest)
     }
-//val url = "https://api.weatherapi.com/v1/current.json?key=4af1e205156743f9af6231933222005&q=moscow&aqi=no"
+
     companion object{
+        /*from https://www.weatherapi.com/ */
         const val API_KEY = "4af1e205156743f9af6231933222005"}
 }

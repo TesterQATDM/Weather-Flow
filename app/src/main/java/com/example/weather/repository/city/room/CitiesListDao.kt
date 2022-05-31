@@ -1,7 +1,10 @@
 package com.example.weather.repository.city.room
 
 import androidx.room.Dao
+import androidx.room.Delete
+import androidx.room.Insert
 import androidx.room.Query
+import com.example.weather.repository.account.room.AccountDbEntity
 
 // todo #9: Create a DAO interface for querying data from 'accounts' table, updating username and
 //          creating a new account.
@@ -20,13 +23,16 @@ import androidx.room.Query
 //            - annotations: @Query
 //            - arguments: accountId
 //            - return type: Flow<AccountDbEntity>
-/*
+
 @Dao
 interface CitiesListDao {
 
-    @Query("SELECT cityDescriptions * FROM citiesListTable ORDER BY id")
-    suspend fun getCitiesList(): CitiesListDbEntity?
+    @Query("SELECT cityName * FROM citiesListTable ORDER BY id")
+    suspend fun getCitiesList(): List<String>
 
+    @Insert(entity = CitiesListDbEntity::class)
+    suspend fun createCity(cityDbEntity: CitiesListDbEntity)
+
+    @Delete(entity = CitiesListDbEntity::class)
+    suspend fun deleteCity(cityDbEntity: CitiesListDbEntity)
 }
-
- */

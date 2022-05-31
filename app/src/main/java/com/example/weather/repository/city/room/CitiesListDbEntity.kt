@@ -17,14 +17,11 @@ import androidx.room.PrimaryKey
 //          - add companion object with fromSignUpData(signUpData: SignUpData) method for creating a new
 //            instance of AccountDbEntity from SignUpData object.
 
-/*@Entity(
+@Entity(
     tableName = "citiesListTable"
 )
 
 data class CitiesListDbEntity(
     @ColumnInfo(name = "id") @PrimaryKey(autoGenerate = true) val id: Long,
-    @ColumnInfo(name = "cityName") val cityName: String,
-    @ColumnInfo(name = "cityDescriptions") val cityDescriptions: String,
+    @ColumnInfo(name = "cityName") val cityName: String
 )
-
- */

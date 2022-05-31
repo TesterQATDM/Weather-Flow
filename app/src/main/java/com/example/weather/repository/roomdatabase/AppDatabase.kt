@@ -6,7 +6,7 @@ import com.example.weather.repository.account.room.AccountDbEntity
 import com.example.weather.repository.account.room.AccountsDao
 
 @Database(
-    version = 2,
+    version = 1,
     entities = [
         AccountDbEntity::class
     ]

@@ -20,7 +20,7 @@ interface AccountRepository: Repository {
     /**
      * Get the account info of the current signed-in user.
      */
-    fun getAccount(): Flow<Account?>
+    suspend fun getAccount(): Flow<Account?>
 
     /**
      * Try to sign-in with the email and password.
