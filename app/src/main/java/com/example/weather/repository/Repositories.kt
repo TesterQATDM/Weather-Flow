@@ -4,7 +4,7 @@ import android.content.Context
 import androidx.room.Room
 import com.example.weather.repository.account.RoomAccountsRepository
 import com.example.weather.repository.account.AccountRepository
-import com.example.weather.repository.city.CityInMemory
+import com.example.weather.repository.city.RoomCityRepository
 import com.example.weather.repository.city.CityRepository
 import com.example.weather.repository.roomdatabase.AppDatabase
 import com.example.weather.repository.settings.AppSettings
@@ -13,8 +13,6 @@ import com.example.weather.repository.settings.SharedPreferencesAppSettings
 object Repositories {
 
     private lateinit var applicationContext: Context
-
-    val cityRepository: CityRepository = CityInMemory()
 
     private val appSettings: AppSettings by lazy {
         SharedPreferencesAppSettings(applicationContext)
@@ -27,6 +25,10 @@ object Repositories {
 
     val accountsRepository: AccountRepository by lazy {
         RoomAccountsRepository(database.getAccountsDao(), appSettings)
+    }
+
+    val cityRepository: CityRepository by lazy {
+        RoomCityRepository(database.getCitiesListDao())
     }
 
     fun init(context: Context) {

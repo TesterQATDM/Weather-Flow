@@ -1,5 +1,6 @@
 package com.example.weather.repository.city
 
+import com.example.weather.repository.city.room.CitiesListDao
 import com.example.weather.repository.city.room.entities.City
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.channels.Channel
@@ -11,7 +12,9 @@ import java.util.*
 
 typealias CityListener = (cities: List<City>) -> Unit
 
-class CityInMemory: CityRepository {
+class RoomCityRepository(
+    private val citiesListDao: CitiesListDao
+): CityRepository {
 
     private var cities = mutableListOf<City>()
     private val listeners = mutableSetOf<CityListener>()

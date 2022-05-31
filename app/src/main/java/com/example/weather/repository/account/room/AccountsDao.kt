@@ -6,7 +6,6 @@ import androidx.room.Query
 import androidx.room.Update
 import com.example.weather.repository.account.room.entities.AccountSignInTuple
 import com.example.weather.repository.account.room.entities.AccountUpdateUsernameTuple
-import com.example.weather.repository.account.room.AccountDbEntity
 import kotlinx.coroutines.flow.Flow
 
 @Dao
@@ -22,6 +21,6 @@ interface AccountsDao {
     suspend fun createAccount(accountDbEntity: AccountDbEntity)
 
     @Query("SELECT * FROM accounts WHERE id = :accountId")
-    fun getById(accountId: Long): Flow<AccountDbEntity ?>
+    fun getById(accountId: Long): Flow<AccountDbEntity?>
 
 }
