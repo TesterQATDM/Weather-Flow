@@ -25,5 +25,4 @@ class AsyncLoader<T>(
         }
         return value!!
     }
-
 }

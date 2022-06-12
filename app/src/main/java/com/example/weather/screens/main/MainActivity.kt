@@ -11,14 +11,14 @@ import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.fragment.findNavController
 import com.example.weather.R
 import com.example.weather.databinding.ActivityMainBinding
-import com.example.weather.repository.Repositories
+import com.example.weather.repository.Singletons
 import com.example.weather.screens.tabs.TabsFragment
 import com.example.weather.utils.viewModelCreator
 import java.util.regex.Pattern
 
 class MainActivity : AppCompatActivity(){
 
-    private val viewModel by viewModelCreator{MainActivityViewModel(Repositories.accountsRepository) }
+    private val viewModel by viewModelCreator{MainActivityViewModel(Singletons.accountsRepository) }
     private lateinit var binding: ActivityMainBinding
     // view-model is used for observing username to be displayed in the toolbar
 
@@ -39,7 +39,7 @@ class MainActivity : AppCompatActivity(){
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater).also { setContentView(it.root) }
-        Repositories.init(applicationContext)
+        Singletons.init(applicationContext)
         setSupportActionBar(binding.toolbar)
 
         // preparing root nav controller

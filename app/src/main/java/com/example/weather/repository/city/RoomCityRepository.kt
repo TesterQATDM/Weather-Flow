@@ -1,64 +1,56 @@
 package com.example.weather.repository.city
 
+import android.database.sqlite.SQLiteConstraintException
+import com.example.weather.repository.account.room.entities.CityDeleteTuple
 import com.example.weather.repository.city.room.CitiesListDao
-import com.example.weather.repository.city.room.entities.City
+import com.example.weather.repository.city.room.CitiesListDbEntity
+import com.example.weather.utils.CityIsExistException
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.channels.awaitClose
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.buffer
+import kotlinx.coroutines.flow.callbackFlow
 import kotlinx.coroutines.withContext
-import java.util.*
 
-typealias CityListener = (cities: List<City>) -> Unit
+typealias CityListener = (cities: List<String>) -> Unit
 
 class RoomCityRepository(
     private val citiesListDao: CitiesListDao
 ): CityRepository {
 
-    private var cities = mutableListOf<City>()
+    private var citiesRoom = mutableListOf<String>()
+
     private val listeners = mutableSetOf<CityListener>()
 
-    init {
-        cities = (0..1).map {
-            City(
-                id = it,
-                name = cityName[it],
-                description = cityDescriptions[it],
-                mLatitudeTextView = 0.0,
-                mLongitudeTextView = 0.0
-            )
-        }.toMutableList()
+    override suspend fun getAvailableCityRoom(): List<String>  = withContext(Dispatchers.IO) {
+        citiesRoom = citiesListDao.citiesList().toMutableList()
+        return@withContext citiesRoom
     }
 
-    override suspend fun moveCity(city: City, moveBy: Int){
-        val oldIndex = cities.indexOfFirst { it.id == city.id }
-        //if (oldIndex == -1) return
-        val newIndex = oldIndex + moveBy
-        //if (newIndex < 0 || newIndex >= cities.size) return
-        delay(100)
-        Collections.swap(cities, oldIndex, newIndex)
+    override suspend fun deleteCityRoom(cityName: String) = withContext(Dispatchers.IO){
+        val tempCityDelete = CityDeleteTuple(cityName)
+        citiesListDao.delete(tempCityDelete)
+        citiesRoom = citiesListDao.citiesList().toMutableList()
         notifyChanges()
+        return@withContext
     }
 
-    override suspend fun getAvailableCity(): List<City> = withContext(Dispatchers.IO) {
-        delay(100)
-        return@withContext cities
-    }
-
-    override fun deleteCity(city: City): Flow<Int> = flow{
-        val delIndex = cities.indexOfFirst { it.id == city.id }
-        var process = 0
-        while (process< 100){
-            process += 5
-            delay(100)
-            emit(process)
+    override suspend fun addCity(cityName: String) = withContext(Dispatchers.IO) {
+        try {
+            val entity = CitiesListDbEntity.fromCityListFragment(cityName)
+            citiesListDao.createCity(entity)
+            citiesRoom = citiesListDao.citiesList().toMutableList()
+            notifyChanges()
+        } catch (e: SQLiteConstraintException) {
+            val appException = CityIsExistException()
+            appException.initCause(e)
+            throw appException
         }
-        cities.removeAt(delIndex)
-        notifyChanges()
+        return@withContext
     }
 
-    override fun listenerCurrentListCities(): Flow<List<City>> = callbackFlow{
+    override fun listenerCurrentListCities(): Flow<List<String>> = callbackFlow{
         val listener:CityListener = {
             trySend(it)
         }
@@ -69,11 +61,6 @@ class RoomCityRepository(
     }.buffer(Channel.CONFLATED)
 
     private fun notifyChanges() {
-        listeners.forEach { it.invoke(cities) }
-    }
-
-    companion object{
-        private val cityName = mutableListOf("moscow", "saint%20petersburg")
-        private val cityDescriptions = mutableListOf("Москва", "Санкт-Петербург")
+        listeners.forEach { it.invoke(citiesRoom) }
     }
 }

@@ -6,7 +6,7 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.navOptions
 import com.example.weather.R
 import com.example.weather.databinding.FragmentProfileBinding
-import com.example.weather.repository.Repositories
+import com.example.weather.repository.Singletons
 import com.example.weather.utils.findTopNavController
 import com.example.weather.utils.viewModelCreator
 import kotlinx.android.synthetic.main.activity_main.*
@@ -14,7 +14,7 @@ import kotlinx.android.synthetic.main.activity_main.*
 class ProfileFragment : Fragment(R.layout.fragment_profile) {
 
     private lateinit var binding: FragmentProfileBinding
-    private val viewModel by viewModelCreator { ProfileViewModel(Repositories.accountsRepository) }
+    private val viewModel by viewModelCreator { ProfileViewModel(Singletons.accountsRepository) }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)

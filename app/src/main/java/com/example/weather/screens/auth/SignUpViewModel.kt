@@ -4,12 +4,10 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.weather.repository.account.AccountRepository
-import com.example.weather.repository.account.room.AccountsDao
 import com.example.weather.repository.account.room.entities.Field
 import com.example.weather.repository.account.room.entities.SignUpData
 import com.example.weather.utils.*
 import kotlinx.coroutines.launch
-
 
 class SignUpViewModel(
     private val accountRepository: AccountRepository

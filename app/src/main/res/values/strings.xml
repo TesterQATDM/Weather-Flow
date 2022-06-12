@@ -41,4 +41,7 @@
     <string name="action_cancel">Cancel</string>
     <string name="city_list">List Cities</string>
     <string name="profile">Profile</string>
+    <string name="city_Is_Exist">City is Exist</string>
+    <string name="connection_error">Can\'t connect to the server</string>
+    <string name="internal_error">Internal error! Please try again later.</string>
 </resources>

@@ -1,15 +1,17 @@
-package com.example.weather.repository.weather
-
+package com.example.weather.repository.weather.gsonAndOpenweather
+/*
 import android.util.Log
+import com.example.weather.moshiAndRetrofit.entities.WeatherApiForm
 import com.example.weather.repository.city.room.entities.City
-import com.example.weather.screens.weatherInCity.Weather
+import com.example.weather.repository.weather.WeatherRepository
 import com.google.gson.Gson
 import java.net.HttpURLConnection
 import java.net.URL
 
-class WeatherInMemory(city: City): WeatherRepository{
+class GsonWeatherRepositoryOpen(city: City):
+    WeatherRepository {
 
-    lateinit var mMineUserEntity: Weather
+    latent var mMineUserEntity: Weather
     private var model = ""
     private var currentCity: City = city
     private var connection: HttpURLConnection
@@ -37,4 +39,10 @@ class WeatherInMemory(city: City): WeatherRepository{
     companion object{
         const val API_KEY = "4af1e205156743f9af6231933222005"
     }
+
+    override suspend fun getWeather(string: String): WeatherApiForm {
+        TODO("Not yet implemented")
+    }
 }
+
+ */

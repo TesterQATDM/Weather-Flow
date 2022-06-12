@@ -6,7 +6,7 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.example.weather.R
 import com.example.weather.databinding.FragmentEditProfileBinding
-import com.example.weather.repository.Repositories
+import com.example.weather.repository.Singletons
 import com.example.weather.utils.observeEvent
 import com.example.weather.utils.viewModelCreator
 
@@ -14,8 +14,7 @@ import com.example.weather.utils.viewModelCreator
 class EditProfileFragment : Fragment(R.layout.fragment_edit_profile) {
 
     private lateinit var binding: FragmentEditProfileBinding
-
-    private val viewModel by viewModelCreator{ EditProfileViewModel(Repositories.accountsRepository)}
+    private val viewModel by viewModelCreator{ EditProfileViewModel(Singletons.accountsRepository)}
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)

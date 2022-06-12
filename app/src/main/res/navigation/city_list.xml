@@ -8,8 +8,8 @@
     <fragment
         android:id="@+id/cityListFragment"
         android:name="com.example.weather.screens.cityList.CityListFragment"
-        android:label="fragment_local_or_city"
-        tools:layout="@layout/fragment_local_or_city" >
+        android:label="Cities"
+        tools:layout="@layout/fragment_local_or_city">
         <action
             android:id="@+id/action_cityListFragment_to_weatherInCityFragment"
             app:destination="@id/weatherInCityFragment" />
@@ -17,8 +17,8 @@
     <fragment
         android:id="@+id/weatherInCityFragment"
         android:name="com.example.weather.screens.weatherInCity.WeatherInCityFragment"
-        android:label="fragment_weather_in_city"
-        tools:layout="@layout/fragment_weather_in_city" >
+        android:label="Weather"
+        tools:layout="@layout/fragment_weather_in_city">
         <argument
             android:name="city"
             app:argType="com.example.weather.repository.city.room.entities.City" />

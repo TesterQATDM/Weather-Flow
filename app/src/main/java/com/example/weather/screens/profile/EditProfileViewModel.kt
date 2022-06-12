@@ -3,10 +3,9 @@ package com.example.weather.screens.profile
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.weather.repository.account.room.entities.Account
 import com.example.weather.repository.account.AccountRepository
+import com.example.weather.repository.account.room.entities.Account
 import com.example.weather.repository.account.room.entities.Field
-import com.example.weather.repository.Repositories.accountsRepository
 import com.example.weather.utils.*
 import kotlinx.coroutines.launch
 
@@ -23,9 +22,6 @@ class EditProfileViewModel(
     private val _navigate = MutableUnitLiveEvent()
     val navigate = _navigate.share()
 
-    private val _clearFields = MutableUnitLiveEvent()
-    val clearFields = _clearFields.share()
-
     init {
         viewModelScope.launch {
             accountsRepository.getAccount().collect{
@@ -33,7 +29,6 @@ class EditProfileViewModel(
             }
         }
     }
-
 
     fun onSaveButtonPressedVM(name: String) =
         viewModelScope.launch {
@@ -48,7 +43,6 @@ class EditProfileViewModel(
                 hideProgress()
             }
         }
-
 
     private fun showProgress() {
         _state.value = _state.requireValue().copy(

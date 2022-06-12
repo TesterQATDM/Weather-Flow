@@ -1,25 +1,26 @@
 package com.example.weather.screens.weatherInCity
 
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import com.example.weather.repository.city.CityRepository
-import com.example.weather.repository.city.room.entities.City
+import androidx.lifecycle.viewModelScope
+import com.example.weather.moshiAndRetrofit.entities.WeatherApiForm
+import com.example.weather.repository.Singletons
+import com.example.weather.repository.weather.moshiAndWeatherApi.RetrofitWeatherRepository
+import com.example.weather.screens.base.BaseViewModel
+import com.example.weather.utils.logger.LogCatLogger
+import com.example.weather.utils.logger.Logger
 import com.example.weather.utils.share
 
 class WeatherInCityViewModel(
-    private val cityRepository: CityRepository
-): ViewModel() {
-    private val _cityD = MutableLiveData<City>()
-    val cityD = _cityD.share()
+    private val weatherRepository: RetrofitWeatherRepository = Singletons.retrofitWeatherRepository,
+    logger: Logger = LogCatLogger
+): BaseViewModel(logger)  {
 
-    private val _weatherAPI = MutableLiveData<Weather>()
-    val weatherAPI= _weatherAPI.share()
+    private val _weatherFromRetrofit = MutableLiveData<WeatherApiForm>()
+    val weatherFromRetrofit = _weatherFromRetrofit.share()
 
-    fun loadWeather(weather: Weather){
-        _weatherAPI.value= weather
-    }
-
-    fun loadCity(city: City) {
-        _cityD.value = city
+    fun loadCity(cityName: String) {
+        viewModelScope.safeLaunch {
+            _weatherFromRetrofit.value = weatherRepository.getRetrofitWeatherRepository(cityName)
+        }
     }
 }

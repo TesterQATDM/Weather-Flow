@@ -1,7 +1,6 @@
 package com.example.weather.repository.account.room.entities
 
 import androidx.room.ColumnInfo
-import androidx.room.PrimaryKey
 
 // todo #6: Create a tuple for fetching account id + account password.
 //          Tuple classes should not be annotated with @Entity but their fields may be
@@ -19,4 +18,8 @@ data class AccountSignInTuple(
 data class AccountUpdateUsernameTuple(
     @ColumnInfo(name = "id") val id: Long,
     @ColumnInfo(name = "username") val username: String
+)
+
+data class CityDeleteTuple(
+    @ColumnInfo(name = "cityName") val cityName: String
 )

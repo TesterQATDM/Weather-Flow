@@ -7,14 +7,14 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.example.weather.R
 import com.example.weather.databinding.FragmentSignInBinding
-import com.example.weather.repository.Repositories
+import com.example.weather.repository.Singletons
 import com.example.weather.utils.viewModelCreator
 import com.example.weather.utils.observeEvent
 
 class SignInFragment : Fragment(R.layout.fragment_sign_in) {
 
     private lateinit var binding: FragmentSignInBinding
-    private val viewModel by viewModelCreator{SignInViewModel(Repositories.accountsRepository)}
+    private val viewModel by viewModelCreator{SignInViewModel(Singletons.accountsRepository)}
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -58,14 +58,8 @@ class SignInFragment : Fragment(R.layout.fragment_sign_in) {
 
     private fun signUpButton(){
         val email = binding.emailEditText.text.toString()
-        val emailArg = if (email.isBlank())
-            null
-        else {
-            email
-        }
+        val emailArg = email.ifBlank { null }
         val direction = SignInFragmentDirections.actionSignInFragmentToSignUpFragment(emailArg)
         findNavController().navigate(direction)
     }
-
-
 }

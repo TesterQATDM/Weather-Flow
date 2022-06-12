@@ -3,44 +3,41 @@ package com.example.weather.screens.cityList
 import android.view.*
 import android.widget.TextView
 import android.widget.Toast
-import androidx.appcompat.widget.CustomPopupMenu
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewbinding.ViewBinding
 import com.example.weather.R
 import com.example.weather.databinding.CityItemBinding
-import com.example.weather.repository.city.room.entities.City
 import kotlinx.android.synthetic.main.city_item.view.*
 
 interface CityActionListener{
 
-    fun onCityMove(city: City, moveBy: Int)
+    fun details(cityName: String)
 
-    fun details(city: City)
-
-    fun deleteCity(city: City)
+    fun deleteCity(cityName: String)
 }
 
 class CityAdapter(
     private val actionListener: CityActionListener
 ) : RecyclerView.Adapter<CityAdapter.MyViewHolder>(), View.OnClickListener {
 
-        var cities: List<City> = emptyList()
+        var cities: List<String> = emptyList()
         set(value) {
             field = value
             notifyDataSetChanged()
         }
     override fun onClick(v: View) {
 
-        if (v.tag is City)
+        if (v.tag is String)
             when(v.id) {
                 R.id.textView ->
                     if (v.findViewById<TextView>(R.id.textView).text.equals("Список городов"))
                         Toast.makeText(v.context, "Список городов", Toast.LENGTH_SHORT).show()
                 R.id.delCity -> {
-                    showPopupMenu(v)
+                    val city = v.tag as String
+                    actionListener.deleteCity(city)
                 }
                 else -> {
-                    val city = v.tag as City
+                    val city = v.tag as String
                     actionListener.details(city)
                 }
             }
@@ -65,10 +62,10 @@ class CityAdapter(
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
         when(holder){
             is MyViewHolder.CityViewHolder -> {
-                val city = cities[position - 1]
-                holder.itemView.tag = city
-                holder.itemView.delCity.tag = city
-                holder.itemView.textView.text = city.description
+                val cityName = cities[position - 1]
+                holder.itemView.tag = cityName
+                holder.itemView.delCity.tag = cityName
+                holder.itemView.textView.text = cityName
             }
             is MyViewHolder.HeaderViewHolder -> {
                 holder.itemView.delCity.visibility = View.GONE
@@ -107,50 +104,9 @@ class CityAdapter(
         }
     }
 
-    private fun showPopupMenu(view: View) {
-        /*add icon in PopupMenu*/
-        val popupMenu = CustomPopupMenu(view.context, view)
-        //val popupMenu = PopupMenu(view.context, view)
-        val context = view.context
-        val user = view.tag as City
-        val position = cities.indexOfFirst { it.id == user.id }
-
-        popupMenu.menu.add(0, ID_MOVE_UP, Menu.NONE, context.getString(R.string.move_up)).apply {
-            isEnabled = position > 0
-            setIcon(R.drawable.ic_baseline_keyboard_arrow_up_24)
-        }
-        popupMenu.menu.add(0, ID_MOVE_DOWN, Menu.NONE, context.getString(R.string.move_down)).apply {
-            isEnabled = position < cities.size - 1
-            setIcon(R.drawable.ic_baseline_keyboard_arrow_down_24)
-        }
-        popupMenu.menu.add(0, ID_REMOVE, Menu.NONE, context.getString(R.string.remove)).apply {
-            setIcon(R.drawable.ic_baseline_delete_24)
-        }
-
-
-        popupMenu.setOnMenuItemClickListener {
-            when (it.itemId) {
-                ID_MOVE_UP -> {
-                    actionListener.onCityMove(user, -1)
-                }
-                ID_MOVE_DOWN -> {
-                    actionListener.onCityMove(user, 1)
-                }
-                ID_REMOVE -> {
-                    actionListener.deleteCity(user)
-                }
-            }
-            return@setOnMenuItemClickListener true
-        }
-        popupMenu.show()
-    }
-
     companion object{
         private const val TYPE_HEADER = 0
         private const val TYPE_CITY = 1
         private const val TYPE_FOOTER = 2
-        private const val ID_MOVE_UP = 1
-        private const val ID_MOVE_DOWN = 2
-        private const val ID_REMOVE = 3
     }
 }

@@ -4,7 +4,6 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.weather.repository.account.AccountRepository
-import com.example.weather.repository.account.room.AccountsDao
 import com.example.weather.utils.share
 import kotlinx.coroutines.launch
 

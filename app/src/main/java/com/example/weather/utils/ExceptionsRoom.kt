@@ -30,3 +30,7 @@ class AccountIsExistException: AppExceptions()
  * Local storage error
  */
 class StorageException: AppExceptions()
+
+//if city is Exist
+class CityIsExistException: AppExceptions()
+

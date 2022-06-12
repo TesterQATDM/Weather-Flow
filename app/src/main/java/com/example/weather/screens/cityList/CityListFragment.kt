@@ -1,10 +1,12 @@
 package com.example.weather.screens.cityList
 
 import android.Manifest
+import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.location.Location
 import android.net.ConnectivityManager
+import android.net.NetworkCapabilities
 import android.net.Uri
 import android.os.Bundle
 import android.provider.Settings
@@ -12,7 +14,6 @@ import android.view.View
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts.RequestMultiplePermissions
 import androidx.appcompat.app.AlertDialog
-import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.view.children
 import androidx.fragment.app.Fragment
@@ -20,8 +21,9 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.weather.R
 import com.example.weather.databinding.FragmentLocalOrCityBinding
-import com.example.weather.repository.Repositories
+import com.example.weather.repository.Singletons
 import com.example.weather.repository.city.room.entities.City
+import com.example.weather.utils.observeEvent
 import com.example.weather.utils.viewModelCreator
 import com.google.android.gms.location.LocationServices
 
@@ -31,7 +33,7 @@ class CityListFragment : Fragment(R.layout.fragment_local_or_city){
     private lateinit var currentCity: City
     private lateinit var adapter: CityAdapter
 
-    private val viewModel by viewModelCreator{CityListViewModel(Repositories.cityRepository)}
+    private val viewModel by viewModelCreator{CityListViewModel(Singletons.cityRepository)}
 
     private val requestLocationPermissionsLauncher = registerForActivityResult(
         RequestMultiplePermissions(),   // contract for requesting more than 1 permission
@@ -41,22 +43,24 @@ class CityListFragment : Fragment(R.layout.fragment_local_or_city){
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         bindingLocalOrCity = FragmentLocalOrCityBinding.bind(view)
-        bindingLocalOrCity.saveProgressGroup.visibility = View.GONE
-        viewModel.cities.observe(viewLifecycleOwner){
+
+        viewModel.citiesRoom.observe(viewLifecycleOwner){
             adapter.cities = it
         }
 
         adapter = CityAdapter(object : CityActionListener {
-            override fun onCityMove(city: City, moveBy: Int) {
-                viewModel.move(city, moveBy)
-            }
 
-            override fun details(city: City) {
+            override fun details(cityName: String) {
+                val city = City(
+                    name = cityName,
+                    mLatitudeTextView = 0.0,
+                    mLongitudeTextView = 0.0
+                )
                 weatherInCityFragment(city)
             }
 
-            override fun deleteCity(city: City) {
-                viewModel.deleteCity(city)
+            override fun deleteCity(cityName: String) {
+                viewModel.deleteCityRoom(cityName)
             }
         })
         bindingLocalOrCity.rcItem.layoutManager = LinearLayoutManager(requireContext())
@@ -68,25 +72,27 @@ class CityListFragment : Fragment(R.layout.fragment_local_or_city){
             }
             else Toast.makeText(requireActivity(), "Проверьте состояние инернета", Toast.LENGTH_LONG).show()
         }
-        bindingLocalOrCity.cancelAction.setOnClickListener{
-            viewModel.cancel()
+
+        bindingLocalOrCity.addCity.setOnClickListener {
+            viewModel.addCity(bindingLocalOrCity.fieldForAddCity.text.toString())
         }
         observeState()
+        observeCityIsExist()
     }
-
+    
     private fun observeState() = viewModel.state.observe(viewLifecycleOwner) {
         if (it.InProgress == 0){
             bindingLocalOrCity.rcItem.visibility = View.VISIBLE
             bindingLocalOrCity.local.visibility = View.VISIBLE
-            bindingLocalOrCity.saveProgressGroup.visibility = View.GONE
         }
         else{
             bindingLocalOrCity.root.children.forEach { elements ->
                 elements.visibility = View.GONE }
-            bindingLocalOrCity.saveProgressGroup.visibility = View.VISIBLE
-            bindingLocalOrCity.saveProgressBar.progress = it.InProgress
-            bindingLocalOrCity.savingPercentageTextView.text = resources.getString(R.string.percentage_value, it.InProgress)
         }
+    }
+
+    private fun observeCityIsExist() = viewModel.cityIsExist.observeEvent(viewLifecycleOwner) {
+        Toast.makeText(requireContext(), R.string.city_Is_Exist, Toast.LENGTH_SHORT).show()
     }
 
     private fun weatherInCityFragment(city: City) {
@@ -134,8 +140,8 @@ class CityListFragment : Fragment(R.layout.fragment_local_or_city){
             ) == PackageManager.PERMISSION_GRANTED
         ) {
             fusedLocationClient.lastLocation.addOnSuccessListener { location: Location? ->
-                location?.let { it: Location ->
-                    currentCity = City(111, "", "Локальный город", location.latitude, location.longitude)
+                location?.let {
+                    currentCity = City("Локальный город", location.latitude, location.longitude)
                     weatherInCityFragment(currentCity)
                 }
             }
@@ -143,8 +149,17 @@ class CityListFragment : Fragment(R.layout.fragment_local_or_city){
     }
 
     private fun statusInternet(): Boolean{
-        val cm = requireActivity().getSystemService(AppCompatActivity.CONNECTIVITY_SERVICE) as ConnectivityManager
-        val nInfo = cm.activeNetworkInfo
-        return nInfo != null && nInfo.isAvailable && nInfo.isConnected
+        val connectivityManager = context?.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+        val nw = connectivityManager.activeNetwork ?: return false
+        val actNw = connectivityManager.getNetworkCapabilities(nw) ?: return false
+        return when {
+            actNw.hasTransport(NetworkCapabilities.TRANSPORT_WIFI) -> true
+            actNw.hasTransport(NetworkCapabilities.TRANSPORT_CELLULAR) -> true
+            //for other device how are able to connect with Ethernet
+            actNw.hasTransport(NetworkCapabilities.TRANSPORT_ETHERNET) -> true
+            //for check internet over Bluetooth
+            actNw.hasTransport(NetworkCapabilities.TRANSPORT_BLUETOOTH) -> true
+            else -> false
+        }
     }
 }

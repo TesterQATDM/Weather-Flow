@@ -21,7 +21,6 @@ class SignInViewModel(
     private val _clearFields = MutableUnitLiveEvent()
     val clearFields = _clearFields.share()
 
-
     fun signInAccount(email: String, password: String) =
         viewModelScope.launch {
         showProgress()
@@ -38,7 +37,6 @@ class SignInViewModel(
                 hideProgress()
             }
     }
-
 
     private fun showProgress() {
         _state.value = _state.requireValue().copy(

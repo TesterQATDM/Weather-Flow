@@ -8,7 +8,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.example.weather.R
 import com.example.weather.databinding.FragmentSignUpBinding
-import com.example.weather.repository.Repositories
+import com.example.weather.repository.Singletons
 import com.example.weather.repository.account.room.entities.SignUpData
 import com.example.weather.utils.observeEvent
 import com.example.weather.utils.viewModelCreator
@@ -16,7 +16,7 @@ import com.example.weather.utils.viewModelCreator
 class SignUpFragment : Fragment(R.layout.fragment_sign_up) {
 
     private lateinit var binding: FragmentSignUpBinding
-    private val viewModel by viewModelCreator { SignUpViewModel(Repositories.accountsRepository) }
+    private val viewModel by viewModelCreator { SignUpViewModel(Singletons.accountsRepository) }
     private val args by navArgs<SignUpFragmentArgs>()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -74,5 +74,4 @@ class SignUpFragment : Fragment(R.layout.fragment_sign_up) {
         )
         viewModel.createAccountVM(signUpData)
     }
-
 }

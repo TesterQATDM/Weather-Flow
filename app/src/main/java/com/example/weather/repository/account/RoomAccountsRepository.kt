@@ -35,7 +35,7 @@ class RoomAccountsRepository(
     }
 
     override suspend fun isSignedIn(): Boolean {
-        delay(2000)
+        delay(5000)
         return appSettings.getCurrentAccountId() != AppSettings.NO_ACCOUNT_ID
     }
 
@@ -67,14 +67,11 @@ class RoomAccountsRepository(
         if (accountId == AppSettings.NO_ACCOUNT_ID) throw AuthException()
         val tempAccount = AccountUpdateUsernameTuple(accountId, name)
         accountsDao.updateUsername(tempAccount)
-
         currentAccountIdFlowRoom.get().value = AccountId(accountId)
-
         return@wrapSQLiteException
     }
 
     override suspend fun logout(){
-        currentAccountIdFlowRoom.get().value = AccountId(AppSettings.NO_ACCOUNT_ID)
         currentAccountIdFlowRoom.get().value = AccountId(AppSettings.NO_ACCOUNT_ID)
     }
 

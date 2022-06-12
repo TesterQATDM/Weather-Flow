@@ -51,5 +51,4 @@ interface AccountRepository: Repository {
      * Sign-out from the app.
      */
     suspend fun logout()
-
 }

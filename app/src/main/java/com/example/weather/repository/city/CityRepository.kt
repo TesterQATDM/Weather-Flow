@@ -1,16 +1,16 @@
 package com.example.weather.repository.city
 
 import com.example.weather.repository.Repository
-import com.example.weather.repository.city.room.entities.City
 import kotlinx.coroutines.flow.Flow
 
 interface CityRepository: Repository {
 
-    suspend fun getAvailableCity(): List<City>
+    suspend fun getAvailableCityRoom(): List<String>
 
-    suspend fun moveCity(city: City, moveBy: Int)
+    suspend fun deleteCityRoom(cityName: String)
 
-    fun deleteCity(city: City): Flow<Int>
+    suspend fun addCity(cityName: String)
 
-    fun listenerCurrentListCities(): Flow<List<City>>
+    fun listenerCurrentListCities(): Flow<List<String>>
+
 }

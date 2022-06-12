@@ -4,52 +4,41 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.weather.repository.city.CityRepository
-import com.example.weather.repository.city.room.entities.City
-import com.example.weather.utils.requireValue
-import com.example.weather.utils.share
+import com.example.weather.utils.*
 import kotlinx.coroutines.Job
-import kotlinx.coroutines.cancelChildren
 import kotlinx.coroutines.launch
 
 class CityListViewModel (
     private val cityRepository: CityRepository
 ): ViewModel() {
 
-    private val _cities = MutableLiveData<List<City>>()
-    val cities = _cities.share()
+    private val _citiesRoom = MutableLiveData<List<String>>()
+    val citiesRoom = _citiesRoom.share()
 
     private val _state = MutableLiveData(State())
     val state = _state.share()
 
+    private val _cityIsExist = MutableUnitLiveEvent()
+    val cityIsExist = _cityIsExist.share()
+
     init{
-        viewModelScope.launch {
-            _cities.value = cityRepository.getAvailableCity()
-        }
-        listenerCurrentListCitiesVM()// listener events
-
+        listenerCurrentListCitiesVM2()
+        listenerCurrentListCitiesVM()
     }
 
-    private fun listenerCurrentListCitiesVM(): Job = viewModelScope.launch {
-        cityRepository.listenerCurrentListCities()
-            .collect {
-                _cities.value = it
-            }
-    }
-
-    fun deleteCity(city: City) = viewModelScope.launch {
+    fun deleteCityRoom(string: String) = viewModelScope.launch {
         showProgress()
-        cityRepository.deleteCity(city).collect { process ->
-            _state.value = _state.requireValue().copy(
-                InProgress = process
-            )
-        }
+        cityRepository.deleteCityRoom(string)
         processIsOK()
     }
 
-    fun move(city: City, moveBy: Int): Job = viewModelScope.launch {
-        showProgress()
-        cityRepository.moveCity(city, moveBy)
-        processIsOK()
+    fun addCity(cityName: String) = viewModelScope.launch{
+        try {
+            cityRepository.addCity(cityName)
+        }
+        catch (e: CityIsExistException){
+            cityIsExistException()
+        }
     }
 
     private fun showProgress() {
@@ -64,11 +53,20 @@ class CityListViewModel (
         )
     }
 
-    fun cancel() {
-        viewModelScope.coroutineContext.cancelChildren()
-        listenerCurrentListCitiesVM()
-        processIsOK()
+    private fun listenerCurrentListCitiesVM2(){
+        viewModelScope.launch {
+            _citiesRoom.value = cityRepository.getAvailableCityRoom()
+        }
     }
+
+    private fun listenerCurrentListCitiesVM(): Job = viewModelScope.launch {
+        cityRepository.listenerCurrentListCities()
+            .collect {
+                _citiesRoom.value = it
+            }
+    }
+
+    private fun cityIsExistException() = _cityIsExist.publishEvent()
 
     data class State(
         var InProgress: Int = 0
