@@ -11,9 +11,9 @@ import com.example.weather.utils.logger.Logger
 import com.example.weather.utils.share
 
 class WeatherInCityViewModel(
-    private val weatherRepository: RetrofitWeatherRepository = Singletons.retrofitWeatherRepository,
+    weatherRepository: RetrofitWeatherRepository = Singletons.retrofitWeatherRepository,
     logger: Logger = LogCatLogger
-): BaseViewModel(logger)  {
+): BaseViewModel(weatherRepository, logger)  {
 
     private val _weatherFromRetrofit = MutableLiveData<WeatherApiForm>()
     val weatherFromRetrofit = _weatherFromRetrofit.share()

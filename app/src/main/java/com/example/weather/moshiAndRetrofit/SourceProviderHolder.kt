@@ -24,7 +24,7 @@ object SourceProviderHolder {
      */
     private fun createRetrofit(moshi: Moshi): Retrofit {
         return Retrofit.Builder()
-            .baseUrl("https://api.weatherapi.com/")
+            .baseUrl("https://api.weatherapi.com/v1/")
             .client(createOkHttpClient())
             .addConverterFactory(MoshiConverterFactory.create(moshi))
             .build()

@@ -2,19 +2,18 @@ package com.example.weather.screens.weatherInCity
 
 import android.os.Bundle
 import android.view.View
+import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.navArgs
 import com.example.weather.R
 import com.example.weather.databinding.FragmentWeatherInCityBinding
 import com.example.weather.moshiAndRetrofit.const.Const.BASE_URL_WITH_KEY
 import com.example.weather.moshiAndRetrofit.entities.WeatherApiForm
-import com.example.weather.repository.Singletons
 import com.example.weather.screens.base.BaseFragment
-import com.example.weather.utils.viewModelCreator
 
 class WeatherInCityFragment : BaseFragment(R.layout.fragment_weather_in_city){
 
     private lateinit var bindingWeatherInCity: FragmentWeatherInCityBinding
-    override val viewModel by viewModelCreator{WeatherInCityViewModel(Singletons.retrofitWeatherRepository)}
+    override val viewModel by viewModels<WeatherInCityViewModel>()
     private val args by navArgs<WeatherInCityFragmentArgs>()
 
     private lateinit var city: WeatherApiForm
@@ -24,7 +23,7 @@ class WeatherInCityFragment : BaseFragment(R.layout.fragment_weather_in_city){
         bindingWeatherInCity = FragmentWeatherInCityBinding.bind(view)
 
         val url = if (args.city.mLatitudeTextView == 0.0){
-            BASE_URL_WITH_KEY + args.city.name
+            args.city.name
         } else{
             BASE_URL_WITH_KEY + "${args.city.mLatitudeTextView},${args.city.mLongitudeTextView}"
 

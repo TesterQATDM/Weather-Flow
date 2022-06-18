@@ -3,12 +3,14 @@ package com.example.weather.screens.base
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.weather.R
+import com.example.weather.repository.weather.moshiAndWeatherApi.RetrofitWeatherRepository
 import com.example.weather.utils.*
 import com.example.weather.utils.logger.Logger
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 
 open class BaseViewModel(
+    val weatherRepository: RetrofitWeatherRepository,
     private val logger: Logger
 ) : ViewModel() {
 

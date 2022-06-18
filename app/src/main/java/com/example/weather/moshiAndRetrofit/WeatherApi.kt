@@ -5,7 +5,7 @@ import retrofit2.http.*
 
 interface WeatherApi{
 
-    @POST()
-    suspend fun getWeatherApi(@Url cityName: String): WeatherApiForm
+    @POST("current.json?key=4af1e205156743f9af6231933222005&")
+    suspend fun getWeatherApi(@Query ("q")cityName: String): WeatherApiForm
 
 }
