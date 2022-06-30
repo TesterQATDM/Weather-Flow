@@ -28,8 +28,8 @@ abstract class AppDatabase : RoomDatabase() {
 
         fun getDB(context: Context): AppDatabase{
             if (dbINSTANCE == null){
-                dbINSTANCE = Room.databaseBuilder<AppDatabase>(
-                    context.applicationContext, AppDatabase::class.java, "MYDB"
+                dbINSTANCE = Room.databaseBuilder(
+                    context.applicationContext, AppDatabase::class.java, "MyDB"
                 )
                     .allowMainThreadQueries()
                     .build()

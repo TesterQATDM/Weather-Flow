@@ -1,7 +1,6 @@
 package com.example.weather.di
 
 import android.app.Application
-import android.content.Context
 import com.example.weather.repository.account.room.AccountsDao
 import com.example.weather.repository.city.room.CitiesListDao
 import com.example.weather.repository.roomdatabase.AppDatabase

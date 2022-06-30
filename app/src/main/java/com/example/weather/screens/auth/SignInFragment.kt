@@ -8,7 +8,6 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.example.weather.R
 import com.example.weather.databinding.FragmentSignInBinding
-import com.example.weather.utils.viewModelCreator
 import com.example.weather.utils.observeEvent
 import dagger.hilt.android.AndroidEntryPoint
 

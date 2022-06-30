@@ -2,7 +2,6 @@ package com.example.weather.repository.account.room
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity
-import androidx.room.Index
 import androidx.room.PrimaryKey
 import com.example.weather.repository.account.room.entities.Account
 import com.example.weather.repository.account.room.entities.SignUpData

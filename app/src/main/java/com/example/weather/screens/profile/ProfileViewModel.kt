@@ -3,9 +3,8 @@ package com.example.weather.screens.profile
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.weather.repository.account.room.entities.Account
-import com.example.weather.repository.account.AccountRepository
 import com.example.weather.repository.account.RoomAccountsRepository
+import com.example.weather.repository.account.room.entities.Account
 import com.example.weather.utils.MutableUnitLiveEvent
 import com.example.weather.utils.publishEvent
 import com.example.weather.utils.share

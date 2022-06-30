@@ -8,7 +8,6 @@ import androidx.navigation.navOptions
 import com.example.weather.R
 import com.example.weather.databinding.FragmentProfileBinding
 import com.example.weather.utils.findTopNavController
-import com.example.weather.utils.viewModelCreator
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.activity_main.*
 
@@ -48,7 +47,7 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
     }
 
     private fun logoutButtonFragment(){
-        requireActivity().usernameTextView.setText("")
+        requireActivity().usernameTextView.text = ""
         viewModel.logOutVM()
     }
 }

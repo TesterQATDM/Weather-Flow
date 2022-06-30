@@ -8,7 +8,6 @@ import androidx.navigation.fragment.findNavController
 import com.example.weather.R
 import com.example.weather.databinding.FragmentEditProfileBinding
 import com.example.weather.utils.observeEvent
-import com.example.weather.utils.viewModelCreator
 import dagger.hilt.android.AndroidEntryPoint
 
 

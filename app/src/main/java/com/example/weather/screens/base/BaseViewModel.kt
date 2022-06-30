@@ -29,7 +29,8 @@ open class BaseViewModel(
                 _showErrorMessageResEvent.publishEvent(R.string.connection_error)
             } catch (e: BackendException) {
                 logError(e)
-                _showErrorMessageEvent.publishEvent(e.message ?: "")
+                //_showErrorMessageEvent.publishEvent("${e.message}")
+                _showErrorMessageEvent.publishEvent("Город не найден")
             } catch (e: Exception) {
                 logError(e)
                 _showErrorMessageResEvent.publishEvent(R.string.internal_error)

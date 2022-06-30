@@ -24,5 +24,4 @@ class StuffsModule {
     fun provideLogger(): Logger {
         return LogCatLogger
     }
-
 }

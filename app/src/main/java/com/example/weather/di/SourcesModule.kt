@@ -11,7 +11,6 @@ import dagger.Module
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 
-
 /**
  * This module binds concrete sources implementations to their
  * interfaces: [RetrofitAccountsSource] is bound to [AccountsSource]

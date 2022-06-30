@@ -24,7 +24,6 @@ import com.example.weather.R
 import com.example.weather.databinding.FragmentLocalOrCityBinding
 import com.example.weather.repository.city.room.entities.City
 import com.example.weather.utils.observeEvent
-import com.example.weather.utils.viewModelCreator
 import com.google.android.gms.location.LocationServices
 import dagger.hilt.android.AndroidEntryPoint
 
