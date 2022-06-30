@@ -3,18 +3,20 @@ package com.example.weather.screens.profile
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.example.weather.R
 import com.example.weather.databinding.FragmentEditProfileBinding
-import com.example.weather.repository.Singletons
 import com.example.weather.utils.observeEvent
 import com.example.weather.utils.viewModelCreator
+import dagger.hilt.android.AndroidEntryPoint
 
 
+@AndroidEntryPoint
 class EditProfileFragment : Fragment(R.layout.fragment_edit_profile) {
 
     private lateinit var binding: FragmentEditProfileBinding
-    private val viewModel by viewModelCreator{ EditProfileViewModel(Singletons.accountsRepository)}
+    private val viewModel by viewModels<EditProfileViewModel>()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)

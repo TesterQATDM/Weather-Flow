@@ -1,6 +1,5 @@
 package com.example.weather.repository.account
 
-import com.example.weather.repository.Repository
 import com.example.weather.repository.account.room.entities.Account
 import com.example.weather.repository.account.room.entities.SignUpData
 import kotlinx.coroutines.flow.Flow
@@ -10,7 +9,7 @@ import com.example.weather.utils.*
  * Repository with account-related actions, e.g. sign-in, sign-up, edit account etc.
  */
 
-interface AccountRepository: Repository {
+interface AccountRepository{
 
     /**
      * Whether user is signed-in or not.

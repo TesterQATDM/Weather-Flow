@@ -4,10 +4,15 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.weather.repository.account.AccountRepository
-import kotlinx.coroutines.launch
+import com.example.weather.repository.account.RoomAccountsRepository
 import com.example.weather.utils.share
+import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class SplashViewModel(
+
+@HiltViewModel
+class SplashViewModel @Inject constructor(
     private val accountRepository: AccountRepository
 ): ViewModel(){
 

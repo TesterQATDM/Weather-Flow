@@ -2,8 +2,11 @@ package com.example.weather.repository.weather.moshiAndWeatherApi
 
 import com.example.weather.moshiAndRetrofit.entities.WeatherApiForm
 import com.example.weather.repository.weather.WeatherSource
+import javax.inject.Inject
+import javax.inject.Singleton
 
-class RetrofitWeatherRepository(
+@Singleton
+class RetrofitWeatherRepository @Inject constructor(
     private val weatherSource: WeatherSource
 ){
 

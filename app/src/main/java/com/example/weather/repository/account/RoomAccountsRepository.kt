@@ -12,8 +12,11 @@ import com.example.weather.utils.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.*
+import javax.inject.Inject
+import javax.inject.Singleton
 
-class RoomAccountsRepository(
+@Singleton
+class RoomAccountsRepository @Inject constructor(
     private val accountsDao: AccountsDao,
     private val appSettings: AppSettings
 ): AccountRepository {

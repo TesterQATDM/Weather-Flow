@@ -17,23 +17,26 @@ import androidx.appcompat.app.AlertDialog
 import androidx.core.app.ActivityCompat
 import androidx.core.view.children
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.weather.R
 import com.example.weather.databinding.FragmentLocalOrCityBinding
-import com.example.weather.repository.Singletons
 import com.example.weather.repository.city.room.entities.City
 import com.example.weather.utils.observeEvent
 import com.example.weather.utils.viewModelCreator
 import com.google.android.gms.location.LocationServices
+import dagger.hilt.android.AndroidEntryPoint
 
+
+@AndroidEntryPoint
 class CityListFragment : Fragment(R.layout.fragment_local_or_city){
 
     private lateinit var bindingLocalOrCity: FragmentLocalOrCityBinding
     private lateinit var currentCity: City
     private lateinit var adapter: CityAdapter
 
-    private val viewModel by viewModelCreator{CityListViewModel(Singletons.cityRepository)}
+    private val viewModel by viewModels<CityListViewModel>()
 
     private val requestLocationPermissionsLauncher = registerForActivityResult(
         RequestMultiplePermissions(),   // contract for requesting more than 1 permission

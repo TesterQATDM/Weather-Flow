@@ -4,11 +4,17 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.weather.repository.account.AccountRepository
+import com.example.weather.repository.account.RoomAccountsRepository
 import com.example.weather.utils.share
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class MainActivityViewModel(
-    private val accountsRepository: AccountRepository)
+
+@HiltViewModel
+class MainActivityViewModel @Inject constructor(
+    private val accountsRepository: RoomAccountsRepository
+)
     :ViewModel() {
 
     private val _username = MutableLiveData<String>()

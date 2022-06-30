@@ -5,8 +5,11 @@ import com.example.weather.moshiAndRetrofit.base.RetrofitConfig
 import com.example.weather.moshiAndRetrofit.entities.WeatherApiForm
 import com.example.weather.repository.weather.WeatherSource
 import kotlinx.coroutines.delay
+import javax.inject.Inject
+import javax.inject.Singleton
 
-class RetrofitWeatherSource(
+@Singleton
+class RetrofitWeatherSource @Inject constructor(
     config: RetrofitConfig
 ) : BaseRetrofitSource(config), WeatherSource {
 

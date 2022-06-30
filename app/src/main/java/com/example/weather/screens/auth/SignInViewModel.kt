@@ -4,12 +4,16 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.weather.repository.account.AccountRepository
+import com.example.weather.repository.account.RoomAccountsRepository
 import com.example.weather.repository.account.room.entities.Field
 import com.example.weather.utils.*
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class SignInViewModel(
-    private val accountRepository: AccountRepository
+@HiltViewModel
+class SignInViewModel @Inject constructor(
+    private val accountRepository: RoomAccountsRepository
 ): ViewModel() {
 
     private val _state = MutableLiveData(State())

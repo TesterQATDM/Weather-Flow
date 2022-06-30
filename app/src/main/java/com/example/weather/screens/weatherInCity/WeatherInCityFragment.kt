@@ -1,6 +1,7 @@
 package com.example.weather.screens.weatherInCity
 
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.navArgs
@@ -9,7 +10,10 @@ import com.example.weather.databinding.FragmentWeatherInCityBinding
 import com.example.weather.moshiAndRetrofit.const.Const.BASE_URL_WITH_KEY
 import com.example.weather.moshiAndRetrofit.entities.WeatherApiForm
 import com.example.weather.screens.base.BaseFragment
+import dagger.hilt.android.AndroidEntryPoint
 
+
+@AndroidEntryPoint
 class WeatherInCityFragment : BaseFragment(R.layout.fragment_weather_in_city){
 
     private lateinit var bindingWeatherInCity: FragmentWeatherInCityBinding
@@ -28,8 +32,6 @@ class WeatherInCityFragment : BaseFragment(R.layout.fragment_weather_in_city){
             BASE_URL_WITH_KEY + "${args.city.mLatitudeTextView},${args.city.mLongitudeTextView}"
 
         }
-        println(url)
-
         viewModel.loadCity(url)
         viewModel.weatherFromRetrofit.observe(viewLifecycleOwner){
             city = it

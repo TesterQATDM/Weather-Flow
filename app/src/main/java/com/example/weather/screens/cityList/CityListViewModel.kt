@@ -4,11 +4,15 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.weather.repository.city.CityRepository
+import com.example.weather.repository.city.RoomCityRepository
 import com.example.weather.utils.*
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class CityListViewModel (
+@HiltViewModel
+class CityListViewModel @Inject constructor(
     private val cityRepository: CityRepository
 ): ViewModel() {
 

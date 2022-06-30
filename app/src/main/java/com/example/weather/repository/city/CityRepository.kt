@@ -1,9 +1,8 @@
 package com.example.weather.repository.city
 
-import com.example.weather.repository.Repository
 import kotlinx.coroutines.flow.Flow
 
-interface CityRepository: Repository {
+interface CityRepository{
 
     suspend fun getAvailableCityRoom(): List<String>
 

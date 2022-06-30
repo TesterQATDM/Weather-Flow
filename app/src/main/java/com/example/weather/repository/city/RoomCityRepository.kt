@@ -12,10 +12,13 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.buffer
 import kotlinx.coroutines.flow.callbackFlow
 import kotlinx.coroutines.withContext
+import javax.inject.Inject
+import javax.inject.Singleton
 
 typealias CityListener = (cities: List<String>) -> Unit
 
-class RoomCityRepository(
+@Singleton
+class RoomCityRepository @Inject constructor(
     private val citiesListDao: CitiesListDao
 ): CityRepository {
 

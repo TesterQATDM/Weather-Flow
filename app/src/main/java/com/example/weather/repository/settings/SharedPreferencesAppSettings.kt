@@ -2,9 +2,13 @@ package com.example.weather.repository.settings
 
 import android.content.Context
 import com.example.weather.repository.settings.AppSettings.Companion.NO_ACCOUNT_ID
+import dagger.hilt.android.qualifiers.ApplicationContext
+import javax.inject.Inject
+import javax.inject.Singleton
 
-class SharedPreferencesAppSettings(
-    appContext: Context
+@Singleton
+class SharedPreferencesAppSettings @Inject constructor(
+    @ApplicationContext appContext: Context
 ): AppSettings {
 
     private val sharedPreferences = appContext.getSharedPreferences("settings", Context.MODE_PRIVATE)
