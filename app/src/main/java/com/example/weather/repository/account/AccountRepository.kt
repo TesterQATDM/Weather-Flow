@@ -27,7 +27,7 @@ interface AccountRepository{
      * @throws [AuthException]
      * @throws [AccountIsExistException]
      */
-    suspend fun signIn(email: String, password: String)
+    suspend fun signIn(username: String, password: String)
 
     /**
      * Create a new account.

@@ -8,12 +8,10 @@ import com.example.weather.utils.PasswordIsMismatchExceptions
  */
 data class SignUpData(
     val username: String,
-    val email: String,
     val password: String,
     val repeatPassword: String
 ) {
     fun validate() {
-        if (email.isBlank()) throw EmptyFieldsExceptions(Field.Email)
         if (username.isBlank()) throw EmptyFieldsExceptions(Field.Username)
         if (password.isBlank()) throw EmptyFieldsExceptions(Field.Password)
         if (password != repeatPassword) throw PasswordIsMismatchExceptions()

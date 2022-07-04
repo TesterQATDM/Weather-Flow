@@ -30,10 +30,8 @@ class SignInFragment : Fragment(R.layout.fragment_sign_in) {
     }
 
     private fun observeState() = viewModel.state.observe(viewLifecycleOwner){
-        binding.emailTextInput.error = if (it.emailEmpty) getString(R.string.field_is_empty) else null
         binding.passwordTextInput.error = if (it.passwordEmpty) getString(R.string.field_is_empty) else null
 
-        binding.emailTextInput.isEnabled = !it.InProgress
         binding.passwordTextInput.isEnabled = !it.InProgress
         binding.signInButton.isEnabled = !it.InProgress
         binding.signUpButton.isEnabled = !it.InProgress
@@ -42,7 +40,7 @@ class SignInFragment : Fragment(R.layout.fragment_sign_in) {
 
     private fun observeShowAuthError() = viewModel.clearFields.observeEvent(viewLifecycleOwner) {
         Toast.makeText(requireContext(), R.string.invalid_email_or_password, Toast.LENGTH_SHORT).show()
-        binding.emailEditText.text?.clear()
+        binding.usernameEditText.text?.clear()
         binding.passwordEditText.text?.clear()
     }
 
@@ -52,15 +50,14 @@ class SignInFragment : Fragment(R.layout.fragment_sign_in) {
 
     private fun signInButton(){
         viewModel.signInAccount(
-            email = binding.emailEditText.text.toString(),
+            username = binding.usernameEditText.text.toString(),
             password = binding.passwordEditText.text.toString()
         )
     }
 
     private fun signUpButton(){
-        val email = binding.emailEditText.text.toString()
-        val emailArg = email.ifBlank { null }
-        val direction = SignInFragmentDirections.actionSignInFragmentToSignUpFragment(emailArg)
+        val username = binding.usernameEditText.text.toString()
+        val direction = SignInFragmentDirections.actionSignInFragmentToSignUpFragment(username)
         findNavController().navigate(direction)
     }
 }

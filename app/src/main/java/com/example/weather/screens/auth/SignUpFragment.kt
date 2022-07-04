@@ -30,19 +30,17 @@ class SignUpFragment : Fragment(R.layout.fragment_sign_up) {
         observeNavigate()
 
         if (savedInstanceState == null && args.emailArg != null){
-            binding.emailEditText.setText(args.emailArg)
+            binding.usernameEditText.setText(args.emailArg)
         }
         binding.createAccountButton.setOnClickListener {createAccountFragment()}
 
     }
 
     private fun observeState() = viewModel.state.observe(viewLifecycleOwner){
-        binding.emailTextInput.error = if (it.emailEmpty) getString(R.string.field_is_empty) else null
         binding.usernameTextInput.error = if (it.nameEmpty) getString(R.string.field_is_empty) else null
         binding.passwordTextInput.error = if (it.passwordEmpty) getString(R.string.field_is_empty) else null
         binding.repeatPasswordTextInput.error = if (it.repeatPasswordEmpty) getString(R.string.field_is_empty) else null
 
-        binding.emailTextInput.isEnabled = !it.InProgress
         binding.usernameTextInput.isEnabled = !it.InProgress
         binding.passwordTextInput.isEnabled = !it.InProgress
         binding.repeatPasswordTextInput.isEnabled = !it.InProgress
@@ -59,7 +57,7 @@ class SignUpFragment : Fragment(R.layout.fragment_sign_up) {
 
     private fun observeAutUphError() = viewModel.clearFieldsEmail.observeEvent(viewLifecycleOwner) {
         Toast.makeText(requireContext(), R.string.account_already_exists, Toast.LENGTH_SHORT).show()
-        binding.emailEditText.text?.clear()
+        binding.usernameEditText.text?.clear()
     }
 
     private fun observeNavigate() = viewModel.navigateToSignInFragment.observeEvent(viewLifecycleOwner) {
@@ -68,7 +66,6 @@ class SignUpFragment : Fragment(R.layout.fragment_sign_up) {
 
     private fun createAccountFragment(){
         val signUpData = SignUpData(
-            email = binding.emailEditText.text.toString(),
             username = binding.usernameEditText.text.toString(),
             password = binding.passwordEditText.text.toString(),
             repeatPassword = binding.repeatPasswordEditText.text.toString()

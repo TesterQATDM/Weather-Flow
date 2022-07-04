@@ -7,7 +7,7 @@
     <fragment
         android:id="@+id/signInFragment"
         android:name="com.example.weather.screens.auth.SignInFragment"
-        android:label="Authorization"
+        android:label="Авторизация"
         tools:layout="@layout/fragment_sign_in">
         <action
             android:id="@+id/action_signInFragment_to_signUpFragment"
@@ -19,7 +19,7 @@
     <fragment
         android:id="@+id/signUpFragment"
         android:name="com.example.weather.screens.auth.SignUpFragment"
-        android:label="Registration"
+        android:label="Регистрация"
         tools:layout="@layout/fragment_sign_up">
         <argument
             android:name="emailArg"
@@ -29,7 +29,7 @@
     <fragment
         android:id="@+id/editProfileFragment"
         android:name="com.example.weather.screens.profile.EditProfileFragment"
-        android:label="Edit profile"
+        android:label="Редактирование профиля"
         tools:layout="@layout/fragment_edit_profile" />
     <fragment
         android:id="@+id/tabsFragment"

@@ -61,7 +61,6 @@ class SignUpViewModel @Inject constructor(
     private fun emptyFieldsRunTimeException(e: EmptyFieldsExceptions) {
         _state.value = _state.requireValue().copy(
             InProgress = false,
-            emailEmpty = e.field == Field.Email,
             nameEmpty = e.field == Field.Username,
             passwordEmpty = e.field == Field.Password,
             repeatPasswordEmpty = e.field == Field.RepeatPassword
@@ -96,7 +95,6 @@ class SignUpViewModel @Inject constructor(
 
     data class State(
         val InProgress: Boolean = false,
-        val emailEmpty: Boolean = false,
         val nameEmpty: Boolean = false,
         val passwordEmpty: Boolean = false,
         val repeatPasswordEmpty: Boolean = false

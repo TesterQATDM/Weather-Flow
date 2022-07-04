@@ -42,10 +42,9 @@ class RoomAccountsRepository @Inject constructor(
         return appSettings.getCurrentAccountId() != AppSettings.NO_ACCOUNT_ID
     }
 
-    override suspend fun signIn(email: String, password: String) {
-        if (email.isBlank()) throw EmptyFieldsExceptions(Field.Email)
+    override suspend fun signIn(username: String, password: String) {
         if (password.isBlank()) throw EmptyFieldsExceptions(Field.Password)
-        val tuple = accountsDao.findAccountByEmail(email) ?: throw AuthException()
+        val tuple = accountsDao.findAccountByEmail(username) ?: throw AuthException()
         if (tuple.password != password) throw AuthException()
         appSettings.setCurrentAccountId(tuple.id)
         currentAccountIdFlowRoom.get().value = AccountId(tuple.id)

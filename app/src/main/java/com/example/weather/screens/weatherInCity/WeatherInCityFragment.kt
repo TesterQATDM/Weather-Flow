@@ -1,6 +1,7 @@
 package com.example.weather.screens.weatherInCity
 
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.navArgs
@@ -24,19 +25,20 @@ class WeatherInCityFragment : BaseFragment(R.layout.fragment_weather_in_city){
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         bindingWeatherInCity = FragmentWeatherInCityBinding.bind(view)
+            val url = if (args.city.mLatitudeTextView == 0.0){
+                args.city.name
+            } else{
+                "${args.city.mLatitudeTextView},${args.city.mLongitudeTextView}"
 
-        val url = if (args.city.mLatitudeTextView == 0.0){
-            args.city.name
-        } else{
-            BASE_URL_WITH_KEY + "${args.city.mLatitudeTextView},${args.city.mLongitudeTextView}"
+            }
+            viewModel.loadCity(url)
+            viewModel.weatherFromRetrofit.observe(viewLifecycleOwner){
+                city = it
+                Log.e("Log", it.toString())
+                bindingWeatherInCity.country.text = city.location.country
+                bindingWeatherInCity.city.text = city.location.name + args.city.mLatitudeTextView + args.city.mLongitudeTextView
+                bindingWeatherInCity.temp.text = city.current.temp_c.toString()
 
-        }
-        viewModel.loadCity(url)
-        viewModel.weatherFromRetrofit.observe(viewLifecycleOwner){
-            city = it
-            bindingWeatherInCity.country.text = city.location.country
-            bindingWeatherInCity.city.text = city.location.name
-            bindingWeatherInCity.temp.text = city.current.temp_c.toString()
-        }
+            }
     }
 }

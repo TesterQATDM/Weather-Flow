@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name" translatable="false">Weather</string>
+    <string name="app_name" translatable="false">Приложение "Погода"</string>
     <string name="city" translatable="false">City</string>
     <string name="temp" translatable="false">Temperature</string>
     <string name="weather" translatable="false">Weather</string>

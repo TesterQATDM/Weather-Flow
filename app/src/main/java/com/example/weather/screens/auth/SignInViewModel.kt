@@ -24,11 +24,11 @@ class SignInViewModel @Inject constructor(
     private val _clearFields = MutableUnitLiveEvent()
     val clearFields = _clearFields.share()
 
-    fun signInAccount(email: String, password: String) =
+    fun signInAccount(username: String, password: String) =
         viewModelScope.launch {
         showProgress()
             try {
-                accountRepository.signIn(email, password)
+                accountRepository.signIn(username, password)
                 processIsOK()
             } catch (e: EmptyFieldsExceptions) {
                 emptyFieldsRuntimeException(e)
@@ -50,7 +50,6 @@ class SignInViewModel @Inject constructor(
     private fun emptyFieldsRuntimeException(e: EmptyFieldsExceptions) {
         _state.value = _state.requireValue().copy(
             InProgress = false,
-            emailEmpty = e.field == Field.Email,
             passwordEmpty = e.field == Field.Password
         )
     }
@@ -72,7 +71,7 @@ class SignInViewModel @Inject constructor(
 
     data class State(
         val InProgress: Boolean = false,
-        val emailEmpty: Boolean = false,
+        val usernameEmpty: Boolean = false,
         val passwordEmpty: Boolean = false
     )
 }

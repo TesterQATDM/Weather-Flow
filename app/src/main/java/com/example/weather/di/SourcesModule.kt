@@ -32,6 +32,6 @@ abstract class SourcesModule {
 
     @Binds
     abstract fun bindWeatherSource(
-        retrofitBoxesSource: RetrofitWeatherSource
+        retrofitWeatherSource: RetrofitWeatherSource
     ): WeatherSource
 }

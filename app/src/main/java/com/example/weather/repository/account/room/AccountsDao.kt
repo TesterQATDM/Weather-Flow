@@ -11,8 +11,8 @@ import kotlinx.coroutines.flow.Flow
 @Dao
 interface AccountsDao {
 
-    @Query("SELECT id, password FROM accounts WHERE email = :email")
-    suspend fun findAccountByEmail(email: String): AccountSignInTuple?
+    @Query("SELECT id, password FROM accounts WHERE username = :username")
+    suspend fun findAccountByEmail(username: String): AccountSignInTuple?
 
     @Update(entity = AccountDbEntity::class)
     suspend fun updateUsername(account: AccountUpdateUsernameTuple)

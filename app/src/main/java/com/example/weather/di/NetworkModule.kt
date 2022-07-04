@@ -1,6 +1,5 @@
 package com.example.weather.di
 
-import android.util.Log
 import com.example.weather.moshiAndRetrofit.const.Const
 import com.squareup.moshi.Moshi
 import dagger.Module

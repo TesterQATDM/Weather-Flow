@@ -30,7 +30,6 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
         if (it == null) {
             return@observe
         }
-        binding.emailTextView.text = it.email
         binding.usernameTextView.text = it.username
     }
 

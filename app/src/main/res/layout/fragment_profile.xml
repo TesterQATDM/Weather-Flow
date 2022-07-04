@@ -30,44 +30,36 @@
             app:layout_constraintTop_toBottomOf="@id/screenTitleTextView"
             app:layout_constraintBottom_toTopOf="@id/editProfileButton"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent">
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_margin="30dp"
+            >
 
-            <TextView
-                android:id="@+id/emailHintTextView"
-                style="@style/ProfileHintTextView"
-                android:text="@string/field_email"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintHorizontal_bias="0"
-                app:layout_constraintStart_toStartOf="parent"/>
 
             <TextView
                 android:id="@+id/usernameHintTextView"
                 style="@style/ProfileHintTextView"
                 android:text="@string/field_username"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintHorizontal_bias="0"
-                app:layout_constraintTop_toBottomOf="@id/emailHintTextView"/>
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="@id/startBarrier"/>
 
             <androidx.constraintlayout.widget.Barrier
                 android:id="@+id/startBarrier"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 app:barrierDirection="end"
-                app:constraint_referenced_ids="emailHintTextView,usernameHintTextView"/>
-
-            <TextView
-                android:id="@+id/emailTextView"
-                style="@style/ProfileValueTextView"
-                tools:text="test@test.test"
-                app:layout_constraintStart_toStartOf="@id/startBarrier"
-                app:layout_constraintTop_toTopOf="@id/emailHintTextView"/>
+                app:constraint_referenced_ids="usernameHintTextView"/>
 
             <TextView
                 android:id="@+id/usernameTextView"
                 style="@style/ProfileValueTextView"
                 tools:text="admin"
                 app:layout_constraintStart_toStartOf="@id/startBarrier"
-                app:layout_constraintTop_toTopOf="@id/usernameHintTextView"/>
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
